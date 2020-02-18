@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import poc.cyclops.dto.OpticalStoreAddressDto;
 import poc.cyclops.dto.OpticalStoreDto;
 import poc.cyclops.service.OpticalStoreService;
 import poc.cyclops.webservice.OpticalStoreWebService;
@@ -33,6 +34,11 @@ public class OpticalStoreWebServiceImpl implements OpticalStoreWebService {
     @Override
     public List<OpticalStoreDto> findByName(String name) {
         return opticalStoreService.findByName(name);
+    }
+
+    @Override
+    public List<OpticalStoreAddressDto> findAddressByName(String name) {
+        return opticalStoreService.findAddressByName(name);
     }
 
 }

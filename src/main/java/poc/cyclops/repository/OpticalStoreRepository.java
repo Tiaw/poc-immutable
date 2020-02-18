@@ -18,6 +18,8 @@ public interface OpticalStoreRepository extends JpaRepository<OpticalStore, Long
     Optional<OpticalStore> findById(Long id);
 
     @EntityGraph(attributePaths = { "employees" }, type = FETCH)
+    <T> Stream<T> streamFetchEmployeesByName(String name, Class<T> type);
+
     <T> Stream<T> streamByName(String name, Class<T> type);
 
 }
