@@ -1,0 +1,57 @@
+<databaseChangeLog 
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+   http://www.liquibase.org/xml/ns/dbchangelog 
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+     
+     <changeSet id="optical_store" author="LDE">
+     	<createTable tableName="optical_store" catalogName="poc" schemaName="poc">
+     		<column name="id" autoIncrement="true" type="int">
+     			<constraints nullable="false" primaryKey="true"/>
+     		</column>
+     		<column name="name" type="varchar(255)">
+     			<constraints nullable="false"/>
+     		</column>
+     		<column name="address" type="varchar(32)">
+     			<constraints nullable="false"/>
+     		</column>
+     		<column name="additional_address" type="varchar(32)" />
+     		<column name="city" type="varchar(32)">
+     			<constraints nullable="false"/>
+     		</column>
+     	</createTable>
+     </changeSet>
+     
+     <changeSet id="employee" author="LDE">
+     	<createTable tableName="employee" catalogName="poc" schemaName="poc">
+     		<column name="id" autoIncrement="true" type="int">
+     			<constraints nullable="false" primaryKey="true"/>
+     		</column>
+     		<column name="first_name" type="varchar(64)">
+     			<constraints nullable="false"/>
+     		</column>
+     		<column name="last_name" type="varchar(64)">
+     			<constraints nullable="false"/>
+     		</column>
+     		<column name="optical_store" type="int">
+     			<constraints nullable="false"/>
+     		</column>
+     	</createTable>
+     </changeSet>
+     
+     <changeSet id="employee-to-optical_store" author="LDE">
+     	<addForeignKeyConstraint constraintName="FK-employee-to-optical_store" 
+     	baseTableCatalogName="poc" baseTableSchemaName="poc" baseTableName="employee" baseColumnNames="optical_store" 
+     	referencedTableCatalogName="poc" referencedTableSchemaName="poc" referencedTableName="optical_store" referencedColumnNames="id"
+     	/>
+     </changeSet>
+     
+     <changeSet id="employee_data" author="LDE">
+     	<sqlFile path="data/employee_data.sql" endDelimiter=";" 
+     	splitStatements="true" relativeToChangelogFile="true" stripComments="true"/>
+     </changeSet>
+     
+</databaseChangeLog>
