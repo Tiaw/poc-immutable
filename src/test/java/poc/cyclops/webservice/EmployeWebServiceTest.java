@@ -19,6 +19,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import poc.cyclops.config.NiceJsonProvider;
 import poc.cyclops.dto.EmployeeDto;
 import poc.cyclops.dto.OpticalStoreAddressDto;
+import poc.cyclops.dto.OpticalStoreAddressDto.OpticalStoreAddressDtoBuilder;
 import poc.cyclops.dto.OpticalStoreDto;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -92,8 +93,8 @@ public class EmployeWebServiceTest {
 
     @Test
     public void shouldFindAddressByName() {
-        OpticalStoreAddressDto expected = new OpticalStoreAddressDto("Optical center", "15 rue du haut", null,
-                "Nantes");
+        OpticalStoreAddressDto expected = new OpticalStoreAddressDtoBuilder().name(
+                "Optical center").address("15 rue du haut").city("Nantes").build();
         List<OpticalStoreAddressDto> actual = opticalStoreWebService.findAddressByName("Optical center");
         assertThat(actual).usingRecursiveComparison()
                           .ignoringAllOverriddenEquals()

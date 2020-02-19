@@ -2,21 +2,22 @@ package poc.cyclops.dto;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import poc.cyclops.dto.OpticalStoreAddressDto.OpticalStoreAddressDtoBuilder;
+
+@JsonDeserialize(builder = OpticalStoreAddressDtoBuilder.class)
 public class OpticalStoreAddressDto {
     private String name;
     private String address;
     private String additionalAddress;
     private String city;
 
-    @JsonCreator(mode = Mode.PROPERTIES)
-    public OpticalStoreAddressDto(@JsonProperty("name") String name,
-            @JsonProperty("address") String address,
-            @JsonProperty("additionalAddress") String additionalAddress,
-            @JsonProperty("city") String city) {
+    public OpticalStoreAddressDto(String name,
+            String address,
+            String additionalAddress,
+            String city) {
         this.name = name;
         this.address = address;
         this.additionalAddress = additionalAddress;
@@ -27,32 +28,16 @@ public class OpticalStoreAddressDto {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getAddress() {
         return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getAdditionalAddress() {
         return additionalAddress;
     }
 
-    public void setAdditionalAddress(String additionalAddress) {
-        this.additionalAddress = additionalAddress;
-    }
-
     public String getCity() {
         return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     @Override
@@ -88,4 +73,36 @@ public class OpticalStoreAddressDto {
                 && Objects.equals(city, other.city) && Objects.equals(name, other.name);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
+    public static class OpticalStoreAddressDtoBuilder {
+        private String name;
+        private String address;
+        private String additionalAddress;
+        private String city;
+
+        public OpticalStoreAddressDto build() {
+            return new OpticalStoreAddressDto(name, address, additionalAddress, city);
+        }
+
+        public OpticalStoreAddressDtoBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public OpticalStoreAddressDtoBuilder address(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public OpticalStoreAddressDtoBuilder additionalAddress(String additionalAddress) {
+            this.additionalAddress = additionalAddress;
+            return this;
+        }
+
+        public OpticalStoreAddressDtoBuilder city(String city) {
+            this.city = city;
+            return this;
+        }
+
+    }
 }
