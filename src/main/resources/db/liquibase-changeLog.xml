@@ -42,8 +42,8 @@
      	</createTable>
      </changeSet>
      
-     <changeSet id="employee-to-optical_store" author="LDE">
-     	<addForeignKeyConstraint constraintName="FK-employee-to-optical_store" 
+     <changeSet id="employee-work_to-optical_store" author="LDE">
+     	<addForeignKeyConstraint constraintName="FK-employee-work_to-optical_store" 
      	baseTableCatalogName="poc" baseTableSchemaName="poc" baseTableName="employee" baseColumnNames="optical_store" 
      	referencedTableCatalogName="poc" referencedTableSchemaName="poc" referencedTableName="optical_store" referencedColumnNames="id"
      	/>

@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(builder = OpticalStoreDto.Builder.class)
 public class OpticalStoreDto {
     private Long id;
     private String name;
@@ -12,15 +15,13 @@ public class OpticalStoreDto {
     private String city;
     private Set<EmployeeDto> employees = new HashSet<>();
 
-    public OpticalStoreDto() {
-    }
-
-    public OpticalStoreDto(Long id, String name, String address, String additionalAddress, String city) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.additionalAddress = additionalAddress;
-        this.city = city;
+    private OpticalStoreDto(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.address = builder.address;
+        this.additionalAddress = builder.additionalAddress;
+        this.city = builder.city;
+        this.employees = builder.employees;
     }
 
     public Long getId() {
@@ -107,6 +108,69 @@ public class OpticalStoreDto {
                .append(employees)
                .append("]");
         return builder.toString();
+    }
+
+    /**
+     * Creates builder to build {@link OpticalStoreDto}.
+     * 
+     * @return created builder
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Builder to build {@link OpticalStoreDto}.
+     */
+    public static final class Builder {
+        private Long id;
+        private String name;
+        private String address;
+        private String additionalAddress;
+        private String city;
+        private Set<EmployeeDto> employees = new HashSet<>();
+
+        private Builder() {
+        }
+
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder withAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder withAdditionalAddress(String additionalAddress) {
+            this.additionalAddress = additionalAddress;
+            return this;
+        }
+
+        public Builder withCity(String city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder withEmployee(EmployeeDto employee) {
+            this.employees.add(employee);
+            return this;
+        }
+
+        public Builder withEmployees(Set<EmployeeDto> employees) {
+            this.employees.addAll(employees);
+            return this;
+        }
+
+        public OpticalStoreDto build() {
+            return new OpticalStoreDto(this);
+        }
     }
 
 }

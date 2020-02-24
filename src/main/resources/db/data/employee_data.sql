@@ -10,4 +10,8 @@ INSERT INTO poc.employee
 VALUES
 ('Jean', 'Moulin', 1),
 ('Bob', 'Morane', 1),
-('Pierre', 'Marron', 2);
+('Pierre', 'Marron', 2),
+('Jean', 'Pupile', 3),
+('Marie', 'Gilger', 3),
+('Oceanne', 'Tilier', 3);
+

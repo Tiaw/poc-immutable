@@ -3,21 +3,16 @@ package poc.cyclops.dto;
 import java.util.Objects;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import poc.cyclops.dto.OpticalStoreAddressDto.OpticalStoreAddressDtoBuilder;
-
-@JsonDeserialize(builder = OpticalStoreAddressDtoBuilder.class)
+@JsonDeserialize(builder = OpticalStoreAddressDto.Builder.class)
 public class OpticalStoreAddressDto {
     private String name;
     private String address;
     private String additionalAddress;
     private String city;
 
-    public OpticalStoreAddressDto(String name,
-            String address,
-            String additionalAddress,
-            String city) {
+    public OpticalStoreAddressDto(String name, String address, String additionalAddress, String city) {
+        super();
         this.name = name;
         this.address = address;
         this.additionalAddress = additionalAddress;
@@ -73,36 +68,71 @@ public class OpticalStoreAddressDto {
                 && Objects.equals(city, other.city) && Objects.equals(name, other.name);
     }
 
-    @JsonPOJOBuilder(withPrefix = "")
-    public static class OpticalStoreAddressDtoBuilder {
+    /**
+     * Creates builder to build {@link OpticalStoreAddressDto}.
+     * 
+     * @return created builder
+     */
+    public static NameStage builder() {
+        return new Builder();
+    }
+
+    public interface NameStage {
+        public AddressStage withName(String name);
+    }
+
+    public interface AddressStage {
+        public BuildStage withAddress(String address);
+    }
+
+    public interface BuildStage {
+        public BuildStage withAdditionalAddress(String additionalAddress);
+
+        public BuildStage withCity(String city);
+
+        public OpticalStoreAddressDto build();
+    }
+
+    /**
+     * Builder to build {@link OpticalStoreAddressDto}.
+     */
+    public static final class Builder implements NameStage, AddressStage, BuildStage {
         private String name;
         private String address;
         private String additionalAddress;
         private String city;
 
-        public OpticalStoreAddressDto build() {
-            return new OpticalStoreAddressDto(name, address, additionalAddress, city);
+        private Builder() {
         }
 
-        public OpticalStoreAddressDtoBuilder name(String name) {
+        @Override
+        public AddressStage withName(String name) {
             this.name = name;
             return this;
         }
 
-        public OpticalStoreAddressDtoBuilder address(String address) {
+        @Override
+        public BuildStage withAddress(String address) {
             this.address = address;
             return this;
         }
 
-        public OpticalStoreAddressDtoBuilder additionalAddress(String additionalAddress) {
+        @Override
+        public BuildStage withAdditionalAddress(String additionalAddress) {
             this.additionalAddress = additionalAddress;
             return this;
         }
 
-        public OpticalStoreAddressDtoBuilder city(String city) {
+        @Override
+        public BuildStage withCity(String city) {
             this.city = city;
             return this;
         }
 
+        @Override
+        public OpticalStoreAddressDto build() {
+            return new OpticalStoreAddressDto(name, address, additionalAddress, city);
+        }
     }
+
 }
