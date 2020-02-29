@@ -13,23 +13,23 @@ public class OpticalWrapper {
 
     public static EmployeeDto toDto(Employee entity) {
         return EmployeeDto.builder()
-                          .withId(entity.getId())
-                          .withFirstName(entity.getFirstName())
-                          .withLastName(entity.getLastName())
+                          .id(entity.getId())
+                          .firstName(entity.getFirstName())
+                          .lastName(entity.getLastName())
                           .build();
     }
 
     public static OpticalStoreDto toDto(OpticalStore entity) {
         return OpticalStoreDto.builder()
-                              .withId(entity.getId())
-                              .withName(entity.getName())
-                              .withAddress(entity.getAddress())
-                              .withAdditionalAddress(entity.getAdditionalAddress())
-                              .withCity(entity.getCity())
-                              .withEmployees(entity.getEmployees()
-                                                   .stream()
-                                                   .map(OpticalWrapper::toDto)
-                                                   .collect(toSet()))
+                              .id(entity.getId())
+                              .name(entity.getName())
+                              .address(entity.getAddress())
+                              .additionalAddress(entity.getAdditionalAddress())
+                              .city(entity.getCity())
+                              .employees(entity.getEmployees()
+                                               .stream()
+                                               .map(OpticalWrapper::toDto)
+                                               .collect(toSet()))
                               .build();
     }
 
