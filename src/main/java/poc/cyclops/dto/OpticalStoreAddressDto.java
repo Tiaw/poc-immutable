@@ -1,138 +1,31 @@
 package poc.cyclops.dto;
 
-import java.util.Objects;
+import org.immutables.value.Value;
+import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@JsonDeserialize(builder = OpticalStoreAddressDto.Builder.class)
-public class OpticalStoreAddressDto {
-    private String name;
-    private String address;
-    private String additionalAddress;
-    private String city;
+@Value.Immutable
+@Value.Style(init = "with*", of = "new", allParameters = true)
+@JsonDeserialize(builder = ImmutableOpticalStoreAddressDto.Builder.class)
+@JsonSerialize(as = ImmutableOpticalStoreAddressDto.class)
+public abstract class OpticalStoreAddressDto {
+    public abstract String getName();
 
-    public OpticalStoreAddressDto(String name, String address, String additionalAddress, String city) {
-        super();
-        this.name = name;
-        this.address = address;
-        this.additionalAddress = additionalAddress;
-        this.city = city;
+    public abstract String getAddress();
+
+    @Nullable
+    public abstract String getAdditionalAddress();
+
+    public abstract String getCity();
+
+    public static ImmutableOpticalStoreAddressDto.Builder builder() {
+        return ImmutableOpticalStoreAddressDto.builder();
     }
 
-    public String getName() {
-        return name;
+    public static ImmutableOpticalStoreAddressDto of(String name, String address, String additionalAddress,
+            String city) {
+        return new ImmutableOpticalStoreAddressDto(name, address, additionalAddress, city);
     }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getAdditionalAddress() {
-        return additionalAddress;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("OpticalStoreAdresseDto [name=")
-               .append(name)
-               .append(", address=")
-               .append(address)
-               .append(", additionalAddress=")
-               .append(additionalAddress)
-               .append(", city=")
-               .append(city)
-               .append("]");
-        return builder.toString();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(additionalAddress, address, city, name);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        OpticalStoreAddressDto other = (OpticalStoreAddressDto) obj;
-        return Objects.equals(additionalAddress, other.additionalAddress) && Objects.equals(address, other.address)
-                && Objects.equals(city, other.city) && Objects.equals(name, other.name);
-    }
-
-    /**
-     * Creates builder to build {@link OpticalStoreAddressDto}.
-     * 
-     * @return created builder
-     */
-    public static NameStage builder() {
-        return new Builder();
-    }
-
-    public interface NameStage {
-        public AddressStage withName(String name);
-    }
-
-    public interface AddressStage {
-        public BuildStage withAddress(String address);
-    }
-
-    public interface BuildStage {
-        public BuildStage withAdditionalAddress(String additionalAddress);
-
-        public BuildStage withCity(String city);
-
-        public OpticalStoreAddressDto build();
-    }
-
-    /**
-     * Builder to build {@link OpticalStoreAddressDto}.
-     */
-    public static final class Builder implements NameStage, AddressStage, BuildStage {
-        private String name;
-        private String address;
-        private String additionalAddress;
-        private String city;
-
-        private Builder() {
-        }
-
-        @Override
-        public AddressStage withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        @Override
-        public BuildStage withAddress(String address) {
-            this.address = address;
-            return this;
-        }
-
-        @Override
-        public BuildStage withAdditionalAddress(String additionalAddress) {
-            this.additionalAddress = additionalAddress;
-            return this;
-        }
-
-        @Override
-        public BuildStage withCity(String city) {
-            this.city = city;
-            return this;
-        }
-
-        @Override
-        public OpticalStoreAddressDto build() {
-            return new OpticalStoreAddressDto(name, address, additionalAddress, city);
-        }
-    }
-
 }
