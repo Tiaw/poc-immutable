@@ -43,6 +43,6 @@ public class OpticalStoreServiceImpl implements OpticalStoreService {
     @Override
     @Transactional(readOnly = true)
     public List<OpticalStoreAddressDto> findAddressByName(String name) {
-        return opticalStoreRepository.streamByName(name).collect(toList());
+        return opticalStoreRepository.streamByName(name, OpticalStoreAddressDto.class).collect(toList());
     }
 }

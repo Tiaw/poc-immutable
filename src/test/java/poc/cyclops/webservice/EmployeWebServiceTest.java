@@ -136,17 +136,6 @@ public class EmployeWebServiceTest {
     }
 
     @Test
-    public void shouldFindAddressByName2() {
-        OpticalStoreAddressDto expected = OpticalStoreAddressDto.of("Optical center", "15 rue du haut", null,
-                "Nantes");
-        List<OpticalStoreAddressDto> actual = opticalStoreWebService.findAddressByName("Optical center");
-        assertThat(actual).usingRecursiveComparison()
-                          .ignoringAllOverriddenEquals()
-                          .ignoringCollectionOrder()
-                          .isEqualTo(Collections.singletonList(expected));
-    }
-
-    @Test
     public void shouldFindByIdNotOptionalEmpty() {
         OpticalStoreDto actual = opticalStoreWebService.findByIdNotOptional(0L);
         assertThat(actual).isNull();

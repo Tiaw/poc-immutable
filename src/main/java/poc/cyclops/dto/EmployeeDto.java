@@ -1,28 +1,21 @@
 package poc.cyclops.dto;
 
-import java.io.Serializable;
-
 import org.immutables.value.Value;
-import org.immutables.value.Value.Default;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Value.Immutable
 @Value.Style(init = "with*")
 @JsonDeserialize(builder = ImmutableEmployeeDto.Builder.class)
-@JsonSerialize(as = ImmutableEmployeeDto.class)
-public abstract class EmployeeDto implements Serializable {
-    private static final long serialVersionUID = 1L;
+public interface EmployeeDto {
 
-    public abstract Long getId();
+    Long getId();
 
-    public abstract String getFirstName();
+    String getFirstName();
 
-    public abstract String getLastName();
+    String getLastName();
 
-    @Default
-    public int getAge() {
+    default int getAge() {
         return 0;
     }
 

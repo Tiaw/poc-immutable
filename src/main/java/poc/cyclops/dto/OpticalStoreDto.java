@@ -6,26 +6,24 @@ import org.immutables.value.Value;
 import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Value.Immutable
 @Value.Style(init = "with*", depluralize = true)
 @JsonDeserialize(builder = ImmutableOpticalStoreDto.Builder.class)
-@JsonSerialize(as = ImmutableOpticalStoreDto.class)
-public abstract class OpticalStoreDto {
+public interface OpticalStoreDto {
 
-    public abstract Long getId();
+    Long getId();
 
-    public abstract String getName();
+    String getName();
 
-    public abstract String getAddress();
+    String getAddress();
 
     @Nullable
-    public abstract String getAdditionalAddress();
+    String getAdditionalAddress();
 
-    public abstract String getCity();
+    String getCity();
 
-    public abstract Set<EmployeeDto> getEmployees();
+    Set<EmployeeDto> getEmployees();
 
     public static ImmutableOpticalStoreDto.Builder builder() {
         return ImmutableOpticalStoreDto.builder();
