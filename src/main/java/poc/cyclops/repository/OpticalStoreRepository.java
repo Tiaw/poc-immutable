@@ -20,6 +20,7 @@ public interface OpticalStoreRepository extends JpaRepository<OpticalStore, Long
     @EntityGraph(attributePaths = { "employees" }, type = FETCH)
     <T> Stream<T> streamFetchEmployeesByName(String name, Class<T> type);
 
+//    @Query("select o.name, o.address, o.additionalAddress, o.city from OpticalStore o where o.name = ?1")
     <T> Stream<T> streamByName(String name, Class<T> type);
 
 }

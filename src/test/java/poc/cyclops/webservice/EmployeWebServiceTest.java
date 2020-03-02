@@ -42,20 +42,20 @@ public class EmployeWebServiceTest {
     @Test
     public void shouldFindById() {
         OpticalStoreDto expected = OpticalStoreDto.builder()
-                                                  .withId(1L)
-                                                  .withName("Optical center")
-                                                  .withAddress("15 rue du haut")
-                                                  .withCity("Nantes")
-                                                  .withEmployee(EmployeeDto.builder()
-                                                                           .withId(1L)
-                                                                           .withFirstName("Jean")
-                                                                           .withLastName("Moulin")
-                                                                           .build())
-                                                  .withEmployee(EmployeeDto.builder()
-                                                                           .withId(2L)
-                                                                           .withFirstName("Bob")
-                                                                           .withLastName("Morane")
-                                                                           .build())
+                                                  .setId(1L)
+                                                  .setName("Optical center")
+                                                  .setAddress("15 rue du haut")
+                                                  .setCity("Nantes")
+                                                  .addEmployee(EmployeeDto.builder()
+                                                                          .setId(1L)
+                                                                          .setFirstName("Jean")
+                                                                          .setLastName("Moulin")
+                                                                          .build())
+                                                  .addEmployee(EmployeeDto.builder()
+                                                                          .setId(2L)
+                                                                          .setFirstName("Bob")
+                                                                          .setLastName("Morane")
+                                                                          .build())
                                                   .build();
         Optional<OpticalStoreDto> actual = opticalStoreWebService.findById(1L);
         assertThat(actual).get()
@@ -74,20 +74,20 @@ public class EmployeWebServiceTest {
     @Test
     public void shouldFindByIdNotOptional() {
         OpticalStoreDto expected = OpticalStoreDto.builder()
-                                                  .withId(1L)
-                                                  .withName("Optical center")
-                                                  .withAddress("15 rue du haut")
-                                                  .withCity("Nantes")
-                                                  .withEmployee(EmployeeDto.builder()
-                                                                           .withId(1L)
-                                                                           .withFirstName("Jean")
-                                                                           .withLastName("Moulin")
-                                                                           .build())
-                                                  .withEmployee(EmployeeDto.builder()
-                                                                           .withId(2L)
-                                                                           .withFirstName("Bob")
-                                                                           .withLastName("Morane")
-                                                                           .build())
+                                                  .setId(1L)
+                                                  .setName("Optical center")
+                                                  .setAddress("15 rue du haut")
+                                                  .setCity("Nantes")
+                                                  .addEmployee(EmployeeDto.builder()
+                                                                          .setId(1L)
+                                                                          .setFirstName("Jean")
+                                                                          .setLastName("Moulin")
+                                                                          .build())
+                                                  .addEmployee(EmployeeDto.builder()
+                                                                          .setId(2L)
+                                                                          .setFirstName("Bob")
+                                                                          .setLastName("Morane")
+                                                                          .build())
                                                   .build();
         OpticalStoreDto actual = opticalStoreWebService.findByIdNotOptional(1L);
         assertThat(actual).usingRecursiveComparison()
@@ -99,20 +99,20 @@ public class EmployeWebServiceTest {
     @Test
     public void shouldFindByName() {
         OpticalStoreDto expected = OpticalStoreDto.builder()
-                                                  .withId(1L)
-                                                  .withName("Optical center")
-                                                  .withAddress("15 rue du haut")
-                                                  .withCity("Nantes")
-                                                  .withEmployee(EmployeeDto.builder()
-                                                                           .withId(1L)
-                                                                           .withFirstName("Jean")
-                                                                           .withLastName("Moulin")
-                                                                           .build())
-                                                  .withEmployee(EmployeeDto.builder()
-                                                                           .withId(2L)
-                                                                           .withFirstName("Bob")
-                                                                           .withLastName("Morane")
-                                                                           .build())
+                                                  .setId(1L)
+                                                  .setName("Optical center")
+                                                  .setAddress("15 rue du haut")
+                                                  .setCity("Nantes")
+                                                  .addEmployee(EmployeeDto.builder()
+                                                                          .setId(1L)
+                                                                          .setFirstName("Jean")
+                                                                          .setLastName("Moulin")
+                                                                          .build())
+                                                  .addEmployee(EmployeeDto.builder()
+                                                                          .setId(2L)
+                                                                          .setFirstName("Bob")
+                                                                          .setLastName("Morane")
+                                                                          .build())
                                                   .build();
         List<OpticalStoreDto> actual = opticalStoreWebService.findByName("Optical center");
         assertThat(actual).usingRecursiveComparison()
@@ -124,9 +124,9 @@ public class EmployeWebServiceTest {
     @Test
     public void shouldFindAddressByName() {
         OpticalStoreAddressDto expected = OpticalStoreAddressDto.builder()
-                                                                .withName("Optical center")
-                                                                .withAddress("15 rue du haut")
-                                                                .withCity("Nantes")
+                                                                .setName("Optical center")
+                                                                .setAddress("15 rue du haut")
+                                                                .setCity("Nantes")
                                                                 .build();
         List<OpticalStoreAddressDto> actual = opticalStoreWebService.findAddressByName("Optical center");
         assertThat(actual).usingRecursiveComparison()
@@ -137,7 +137,7 @@ public class EmployeWebServiceTest {
 
     @Test
     public void shouldFindAddressByName2() {
-        OpticalStoreAddressDto expected = new OpticalStoreAddressDto("Optical center", "15 rue du haut", null,
+        OpticalStoreAddressDto expected = OpticalStoreAddressDto.of("Optical center", "15 rue du haut", null,
                 "Nantes");
         List<OpticalStoreAddressDto> actual = opticalStoreWebService.findAddressByName("Optical center");
         assertThat(actual).usingRecursiveComparison()

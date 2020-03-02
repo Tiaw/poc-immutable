@@ -14,6 +14,7 @@ import poc.cyclops.dto.OpticalStoreAddressDto;
 import poc.cyclops.dto.OpticalStoreDto;
 import poc.cyclops.repository.OpticalStoreRepository;
 import poc.cyclops.service.OpticalStoreService;
+import poc.cyclops.view.OpticalStoreAddressView;
 import poc.cyclops.wrapper.OpticalWrapper;
 
 @Service
@@ -43,6 +44,8 @@ public class OpticalStoreServiceImpl implements OpticalStoreService {
     @Override
     @Transactional(readOnly = true)
     public List<OpticalStoreAddressDto> findAddressByName(String name) {
-        return opticalStoreRepository.streamByName(name, OpticalStoreAddressDto.class).collect(toList());
+        return opticalStoreRepository.streamByName(name, OpticalStoreAddressView.class)
+                                     .map(OpticalWrapper::toDto)
+                                     .collect(toList());
     }
 }

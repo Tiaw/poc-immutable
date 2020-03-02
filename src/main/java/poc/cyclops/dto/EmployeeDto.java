@@ -1,119 +1,41 @@
 package poc.cyclops.dto;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.auto.value.AutoValue;
 
-@JsonDeserialize(builder = EmployeeDto.Builder.class)
-public class EmployeeDto implements Serializable {
-    private static final long serialVersionUID = 1L;
+@JsonDeserialize(builder = AutoValue_EmployeeDto.Builder.class)
+@JsonSerialize(as = EmployeeDto.class)
+@AutoValue
+public abstract class EmployeeDto implements Serializable {
+    private static final long serialVersionUID = 3330580419527461461L;
 
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private int age;
+    public abstract Long getId();
 
-    private EmployeeDto(Builder builder) {
-        this.id = builder.id;
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.age = builder.age;
-    }
+    public abstract String getFirstName();
 
-    public Long getId() {
-        return id;
-    }
+    public abstract String getLastName();
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public abstract int getAge();
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(age, firstName, id, lastName);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        EmployeeDto other = (EmployeeDto) obj;
-        return age == other.age && Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
-                && Objects.equals(lastName, other.lastName);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("EmployeeDto [id=")
-                .append(id)
-                .append(", firstName=")
-                .append(firstName)
-                .append(", lastName=")
-                .append(lastName)
-                .append(", age=")
-                .append(age)
-                .append("]");
-        return builder.toString();
-    }
-
-    /**
-     * Creates builder to build {@link EmployeeDto}.
-     * 
-     * @return created builder
-     */
     public static Builder builder() {
-        return new Builder();
+        return new AutoValue_EmployeeDto.Builder().setAge(0);
     }
 
-    /**
-     * Builder to build {@link EmployeeDto}.
-     */
-    public static final class Builder {
-        private Long id;
-        private String firstName;
-        private String lastName;
-        private int age;
+    @AutoValue.Builder
+    @JsonPOJOBuilder(withPrefix = "set")
+    public abstract static class Builder {
+        public abstract Builder setId(Long id);
 
-        private Builder() {
-        }
+        public abstract Builder setFirstName(String firstName);
 
-        public Builder withId(Long id) {
-            this.id = id;
-            return this;
-        }
+        public abstract Builder setLastName(String lastName);
 
-        public Builder withFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
+        public abstract Builder setAge(int age);
 
-        public Builder withLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public Builder withAge(int age) {
-            this.age = age;
-            return this;
-        }
-
-        public EmployeeDto build() {
-            return new EmployeeDto(this);
-        }
+        public abstract EmployeeDto build();
     }
-
 }
