@@ -4,18 +4,20 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import io.vavr.control.Option;
+
 @JsonDeserialize(builder = OpticalStoreAddressDto.Builder.class)
 public class OpticalStoreAddressDto {
     private String name;
     private String address;
-    private String additionalAddress;
+    private Option<String> additionalAddress;
     private String city;
 
     public OpticalStoreAddressDto(String name, String address, String additionalAddress, String city) {
         super();
         this.name = name;
         this.address = address;
-        this.additionalAddress = additionalAddress;
+        this.additionalAddress = Option.of(additionalAddress);
         this.city = city;
     }
 
@@ -27,7 +29,7 @@ public class OpticalStoreAddressDto {
         return address;
     }
 
-    public String getAdditionalAddress() {
+    public Option<String> getAdditionalAddress() {
         return additionalAddress;
     }
 
@@ -99,7 +101,7 @@ public class OpticalStoreAddressDto {
     public static final class Builder implements NameStage, AddressStage, BuildStage {
         private String name;
         private String address;
-        private String additionalAddress;
+        private Option<String> additionalAddress = Option.none();
         private String city;
 
         private Builder() {
@@ -119,7 +121,7 @@ public class OpticalStoreAddressDto {
 
         @Override
         public BuildStage withAdditionalAddress(String additionalAddress) {
-            this.additionalAddress = additionalAddress;
+            this.additionalAddress = Option.of(additionalAddress);
             return this;
         }
 
@@ -131,7 +133,7 @@ public class OpticalStoreAddressDto {
 
         @Override
         public OpticalStoreAddressDto build() {
-            return new OpticalStoreAddressDto(name, address, additionalAddress, city);
+            return new OpticalStoreAddressDto(name, address, additionalAddress.getOrNull(), city);
         }
     }
 

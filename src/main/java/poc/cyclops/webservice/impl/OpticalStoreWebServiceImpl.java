@@ -1,11 +1,10 @@
 package poc.cyclops.webservice.impl;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.vavr.collection.Seq;
+import io.vavr.control.Option;
 import poc.cyclops.dto.OpticalStoreAddressDto;
 import poc.cyclops.dto.OpticalStoreDto;
 import poc.cyclops.service.OpticalStoreService;
@@ -22,22 +21,22 @@ public class OpticalStoreWebServiceImpl implements OpticalStoreWebService {
     }
 
     @Override
-    public Optional<OpticalStoreDto> findById(Long id) {
+    public Option<OpticalStoreDto> findById(Long id) {
         return opticalStoreService.findById(id);
     }
 
     @Override
     public OpticalStoreDto findByIdNotOptional(Long id) {
-        return opticalStoreService.findById(id).orElse(null);
+        return opticalStoreService.findById(id).getOrNull();
     }
 
     @Override
-    public List<OpticalStoreDto> findByName(String name) {
+    public Seq<OpticalStoreDto> findByName(String name) {
         return opticalStoreService.findByName(name);
     }
 
     @Override
-    public List<OpticalStoreAddressDto> findAddressByName(String name) {
+    public Seq<OpticalStoreAddressDto> findAddressByName(String name) {
         return opticalStoreService.findAddressByName(name);
     }
 

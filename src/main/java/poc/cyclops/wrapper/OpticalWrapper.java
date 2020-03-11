@@ -1,7 +1,6 @@
 package poc.cyclops.wrapper;
 
-import static java.util.stream.Collectors.toSet;
-
+import io.vavr.collection.Vector;
 import poc.cyclops.domain.Employee;
 import poc.cyclops.domain.OpticalStore;
 import poc.cyclops.dto.EmployeeDto;
@@ -29,7 +28,7 @@ public class OpticalWrapper {
                               .withEmployees(entity.getEmployees()
                                                    .stream()
                                                    .map(OpticalWrapper::toDto)
-                                                   .collect(toSet()))
+                                                   .collect(Vector.collector()))
                               .build();
     }
 

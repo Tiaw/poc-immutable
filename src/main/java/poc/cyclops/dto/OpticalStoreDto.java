@@ -1,19 +1,21 @@
 package poc.cyclops.dto;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import io.vavr.collection.Seq;
+import io.vavr.collection.Vector;
+import io.vavr.control.Option;
 
 @JsonDeserialize(builder = OpticalStoreDto.Builder.class)
 public class OpticalStoreDto {
     private Long id;
     private String name;
     private String address;
-    private String additionalAddress;
+    private Option<String> additionalAddress;
     private String city;
-    private Set<EmployeeDto> employees = new HashSet<>();
+    private Seq<EmployeeDto> employees;
 
     private OpticalStoreDto(Builder builder) {
         this.id = builder.id;
@@ -28,48 +30,24 @@ public class OpticalStoreDto {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getAdditionalAddress() {
+    public Option<String> getAdditionalAddress() {
         return additionalAddress;
-    }
-
-    public void setAdditionalAddress(String additionalAddress) {
-        this.additionalAddress = additionalAddress;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public Set<EmployeeDto> getEmployees() {
+    public Seq<EmployeeDto> getEmployees() {
         return employees;
-    }
-
-    public void setEmployees(Set<EmployeeDto> employees) {
-        this.employees = employees;
     }
 
     @Override
@@ -110,13 +88,23 @@ public class OpticalStoreDto {
         return builder.toString();
     }
 
-    /**
-     * Creates builder to build {@link OpticalStoreDto}.
-     * 
-     * @return created builder
-     */
+    public Builder draft() {
+        return new Builder(this);
+    }
+
     public static Builder builder() {
         return new Builder();
+    }
+
+    /**
+     * Creates a builder to build {@link OpticalStoreDto} and initialize it with the
+     * given object.
+     * 
+     * @param opticalStoreDto to initialize the builder with
+     * @return created builder
+     */
+    public static Builder builderFrom(OpticalStoreDto opticalStoreDto) {
+        return new Builder(opticalStoreDto);
     }
 
     /**
@@ -126,11 +114,20 @@ public class OpticalStoreDto {
         private Long id;
         private String name;
         private String address;
-        private String additionalAddress;
+        private Option<String> additionalAddress = Option.none();
         private String city;
-        private Set<EmployeeDto> employees = new HashSet<>();
+        private Seq<EmployeeDto> employees = Vector.empty();
 
         private Builder() {
+        }
+
+        private Builder(OpticalStoreDto opticalStoreDto) {
+            this.id = opticalStoreDto.id;
+            this.name = opticalStoreDto.name;
+            this.address = opticalStoreDto.address;
+            this.additionalAddress = opticalStoreDto.additionalAddress;
+            this.city = opticalStoreDto.city;
+            this.employees = opticalStoreDto.employees;
         }
 
         public Builder withId(Long id) {
@@ -149,7 +146,7 @@ public class OpticalStoreDto {
         }
 
         public Builder withAdditionalAddress(String additionalAddress) {
-            this.additionalAddress = additionalAddress;
+            this.additionalAddress = Option.of(additionalAddress);
             return this;
         }
 
@@ -158,13 +155,18 @@ public class OpticalStoreDto {
             return this;
         }
 
-        public Builder withEmployee(EmployeeDto employee) {
-            this.employees.add(employee);
+        public Builder addEmployee(EmployeeDto employee) {
+            this.employees = this.employees.append(employee);
             return this;
         }
 
-        public Builder withEmployees(Set<EmployeeDto> employees) {
-            this.employees.addAll(employees);
+        public Builder addAllEmployees(Iterable<EmployeeDto> employees) {
+            this.employees = this.employees.appendAll(employees);
+            return this;
+        }
+
+        public Builder withEmployees(Iterable<EmployeeDto> employees) {
+            this.employees = Vector.ofAll(employees);
             return this;
         }
 

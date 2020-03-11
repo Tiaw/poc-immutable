@@ -1,16 +1,15 @@
 package poc.cyclops.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import io.vavr.collection.Seq;
+import io.vavr.control.Option;
 import poc.cyclops.dto.OpticalStoreAddressDto;
 import poc.cyclops.dto.OpticalStoreDto;
 
 public interface OpticalStoreService {
-    public Optional<OpticalStoreDto> findById(Long id);
+    Option<OpticalStoreDto> findById(Long id);
 
-    List<OpticalStoreDto> findByName(String name);
+    Seq<OpticalStoreDto> findByName(String name);
 
-    List<OpticalStoreAddressDto> findAddressByName(String name);
+    Seq<OpticalStoreAddressDto> findAddressByName(String name);
 
 }

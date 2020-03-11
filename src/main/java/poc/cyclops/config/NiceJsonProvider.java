@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
+import io.vavr.jackson.datatype.VavrModule;
+
 @Provider
 @Component
 public class NiceJsonProvider extends JacksonJsonProvider {
@@ -20,6 +22,6 @@ public class NiceJsonProvider extends JacksonJsonProvider {
         final ObjectMapper mapper = _mapperConfig.getDefaultMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.setSerializationInclusion(Include.NON_ABSENT);
-        mapper.registerModule(new Jdk8Module());
+        mapper.registerModules(new Jdk8Module(), new VavrModule());
     }
 }

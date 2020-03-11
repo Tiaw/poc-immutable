@@ -1,14 +1,12 @@
 package poc.cyclops.service.impl;
 
-import static java.util.stream.Collectors.toList;
-
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.vavr.collection.Seq;
+import io.vavr.collection.Vector;
+import io.vavr.control.Option;
 import poc.cyclops.domain.OpticalStore;
 import poc.cyclops.dto.OpticalStoreAddressDto;
 import poc.cyclops.dto.OpticalStoreDto;
@@ -28,21 +26,21 @@ public class OpticalStoreServiceImpl implements OpticalStoreService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<OpticalStoreDto> findById(Long id) {
+    public Option<OpticalStoreDto> findById(Long id) {
         return opticalStoreRepository.findById(id).map(OpticalWrapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<OpticalStoreDto> findByName(String name) {
+    public Seq<OpticalStoreDto> findByName(String name) {
         return opticalStoreRepository.streamFetchEmployeesByName(name, OpticalStore.class)
                                      .map(OpticalWrapper::toDto)
-                                     .collect(toList());
+                                     .collect(Vector.collector());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<OpticalStoreAddressDto> findAddressByName(String name) {
-        return opticalStoreRepository.streamByName(name, OpticalStoreAddressDto.class).collect(toList());
+    public Seq<OpticalStoreAddressDto> findAddressByName(String name) {
+        return opticalStoreRepository.streamByName(name, OpticalStoreAddressDto.class).collect(Vector.collector());
     }
 }
